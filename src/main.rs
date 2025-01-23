@@ -25,11 +25,13 @@ fn main() {
     let mut items = String::new();
 
     for (name, install) in json.installs {
+        // no-default-features
         if install.no_default_features {
             items.push_str("--no-default-features");
             items.push(' ');
         }
 
+        // features
         if !install.features.is_empty() {
             items.push_str("-F ");
         }
@@ -38,12 +40,11 @@ fn main() {
             items.push(' ');
         }
 
+        // git
         let parts: Vec<_> = name.split_whitespace().collect();
 
         let name = parts[0];
-        // Filter out parentheses
-        let url = parts[2];
-        let (source, url) = url.split_once('+').unwrap();
+        let (source, url) = parts[2].split_once('+').unwrap();
         if source == "(git" {
             items.push_str("--git ");
 
@@ -51,6 +52,8 @@ fn main() {
             items.push_str(url);
             items.push(' ');
         }
+
+        // name
         items.push_str(name);
 
         items.push('\n');
