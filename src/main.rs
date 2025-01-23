@@ -37,7 +37,7 @@ fn main() {
         }
         for feature in install.features {
             items.push_str(&feature);
-            items.push(' ');
+            items.push(',');
         }
 
         // git
