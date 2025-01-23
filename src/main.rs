@@ -35,9 +35,14 @@ fn main() {
         if !install.features.is_empty() {
             items.push_str("-F ");
         }
-        for feature in install.features {
-            items.push_str(&feature);
-            items.push(',');
+        for (iter, feature) in install.features.iter().enumerate() {
+            if iter != 0 {
+                items.push(',');
+            }
+            items.push_str(feature);
+        }
+        if !install.features.is_empty() {
+            items.push(' ');
         }
 
         // git
